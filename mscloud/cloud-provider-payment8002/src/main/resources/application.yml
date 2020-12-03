@@ -1,0 +1,31 @@
+server:
+  port: 8002
+
+spring:
+  application:
+    name: cloud-payment-service
+
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: org.gjt.mm.mysql.Driver
+    url: jdbc:mysql://localhost:3306/cloud2020?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: 123456
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.tc.springcloud.entities  # 所有Entity 别名类所在包
+
+eureka:
+  client:
+    # 注册进 Eureka 的服务中心
+    register-with-eureka: true
+    # 检索 服务中心 的其它服务
+    fetch-registry: true
+    service-url:
+      # 设置与 Eureka Server 交互的地址
+      #      defaultZone: http://localhost:7001/eureka/ 单机版
+      defaultZone: http://eureka7002.com:7002/eureka/,http://eureka7001.com:7001/eureka/ #集群版
+  #如果不配置下面的内容，那么在注册进注册中心时，eureka的Status就默认是计算机的名字，有时候计算机名字中可能出现非法字符，比如V_ichao这种，配置下面的之后，就能把status改为instance-id中所配置的值
+  instance:
+    prefer-ip-address: true #访问路径可以显示ip地址
+    instance-id: payment-server8002 #指定服务的id
